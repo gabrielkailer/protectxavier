@@ -1,5 +1,5 @@
 import statsData from "@/data/stats.json";
-import { AnimatedCounter } from "@/components/AnimatedCounter";
+import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
 
 export function StatsSection() {
     return (

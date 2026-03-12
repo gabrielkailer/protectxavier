@@ -1,25 +1,20 @@
-import { Hero } from "@/components/Hero";
-import { CrimeStatisticsSection } from "@/components/CrimeStatisticsSection";
-import { Header } from "@/components/Header";
-import { ContactModal } from "@/components/ContactModal";
-import { ClientsCarousel } from "@/components/ClientsCarousel";
-import { ServicesSection } from "@/components/ServicesSection";
-import { BlogSection } from "@/components/BlogSection";
-import { MonitoringSection } from "@/components/MonitoringSection";
-import { AboutUsSection } from "@/components/AboutUsSection";
-import { Footer } from "@/components/Footer";
-import { createClient } from "@supabase/supabase-js";
+import { Hero } from "@/components/sections/Hero";
+import { CrimeStatisticsSection } from "@/components/sections/CrimeStatisticsSection";
+import { Header } from "@/components/layout/Header";
+import { ContactModal } from "@/components/ui/ContactModal";
+import { ClientsCarousel } from "@/components/sections/ClientsCarousel";
+import { ServicesSection } from "@/components/sections/ServicesSection";
+import { BlogSection } from "@/components/sections/BlogSection";
+import { MonitoringSection } from "@/components/sections/MonitoringSection";
+import { AboutUsSection } from "@/components/sections/AboutUsSection";
+import { Footer } from "@/components/layout/Footer";
+import { supabaseAdmin } from "@/lib/supabase/admin";
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 export const fetchCache = 'force-no-store';
 
 export default async function Home() {
-  const supabaseAdmin = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
-
   const { data: latestArticles = [] } = await supabaseAdmin
     .from("articles")
     .select("id, slug, title, excerpt, cover_image, category, created_at, read_time")

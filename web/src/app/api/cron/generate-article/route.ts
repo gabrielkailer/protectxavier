@@ -1,31 +1,8 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
-import OpenAI from "openai";
+import { supabaseAdmin } from "@/lib/supabase/admin";
+import { openai } from "@/lib/openai";
+import { ARTICLE_TOPICS } from "@/config/topics";
 import slugify from "slugify";
-
-// Initialize OpenAI
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY || "",
-});
-
-// Initialize Supabase with SERVICE_ROLE key to bypass RLS for inserting articles
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
-
-const TOPICS = [
-  "Inovações em Controle de Acesso e Portaria Remota",
-  "O impacto da Inteligência Artificial na Segurança Patrimonial",
-  "Gestão de Facilities: Como otimizar custos sem perder qualidade",
-  "Tendências de Segurança Eletrônica para Condomínios de Alto Padrão",
-  "Biometria e Reconhecimento Facial: O futuro da segurança corporativa",
-  "Integração tecnológica em sistemas de monitoramento 24h",
-  "Segurança Preditiva: Antecipando riscos com tecnologia de ponta",
-  "Os desafios legais e de LGPD no monitoramento por câmeras",
-  "Como a automação residencial e condominial aumenta a segurança",
-  "Treinamento de equipes de segurança: A importância do fator humano aliado à tecnologia"
-];
 
 export async function GET(request: Request) {
   try {
@@ -37,7 +14,7 @@ export async function GET(request: Request) {
       );
     }
 
-    const randomTopic = TOPICS[Math.floor(Math.random() * TOPICS.length)];
+    const randomTopic = ARTICLE_TOPICS[Math.floor(Math.random() * ARTICLE_TOPICS.length)];
 
     // 2. Buscar Títulos Existentes para Evitar Duplicidade
     const { data: existingTitlesData } = await supabaseAdmin.from("articles").select("title");

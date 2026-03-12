@@ -1,6 +1,10 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
+/**
+ * Refreshes the Supabase auth session on every request via middleware.
+ * Also handles route protection for /admin paths.
+ */
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
@@ -15,7 +19,7 @@ export async function updateSession(request: NextRequest) {
           return request.cookies.getAll();
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) => request.cookies.set(name, value, options));
+          cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
           supabaseResponse = NextResponse.next({
             request,
           });
@@ -27,12 +31,12 @@ export async function updateSession(request: NextRequest) {
     }
   );
 
-  // Validando o token de autenticação
+  // Validate auth token
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Redireciona usuários não autenticados que tentam acessar o painel /admin para o /admin/login
+  // Redirect unauthenticated users trying to access /admin to /admin/login
   if (
     !user &&
     request.nextUrl.pathname.startsWith("/admin") &&
@@ -43,7 +47,7 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url);
   }
   
-  // Redireciona usuários já autenticados que tentam acessar a tela de login para o dashboard
+  // Redirect authenticated users trying to access login to the dashboard
   if (
     user && 
     request.nextUrl.pathname === "/admin/login"

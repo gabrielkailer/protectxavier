@@ -1,6 +1,10 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
+/**
+ * Creates a Supabase client for use in Server Components and Server Actions.
+ * Uses the public anon key + cookies for user-scoped auth.
+ */
 export async function createClient() {
   const cookieStore = await cookies();
 

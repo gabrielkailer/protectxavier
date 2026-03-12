@@ -1,5 +1,5 @@
-import { createClient as createServerClient } from "@/utils/supabase/server";
-import { createClient } from "@supabase/supabase-js";
+import { createClient as createServerClient } from "@/lib/supabase/server";
+import { supabaseAdmin } from "@/lib/supabase/admin";
 import { redirect } from "next/navigation";
 import { LogOut, BrainCircuit, Calendar, ExternalLink } from "lucide-react";
 import Link from "next/link";
@@ -19,12 +19,6 @@ export default async function AdminDashboard() {
   if (!data?.user) {
     redirect("/admin/login");
   }
-
-  // Bypass RLS para o admin conseguir enxergar tudo independente de regras do Supabase
-  const supabaseAdmin = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
 
   // Buscando os artigos usando a chave de Admin
   const { data: articles, error } = await supabaseAdmin

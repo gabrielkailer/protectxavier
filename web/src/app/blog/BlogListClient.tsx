@@ -6,19 +6,7 @@ import { Calendar, Clock, Loader2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { fetchMoreArticles } from "./actions";
-
-// Tipagem baseada nos campos do Supabase
-type Article = {
-  id: string;
-  slug: string;
-  title: string;
-  excerpt: string;
-  cover_image: string | null;
-  category: string;
-  created_at: string;
-  read_time: number;
-  author: string;
-};
+import type { Article } from "@/types/article";
 
 export function BlogListClient({ initialArticles }: { initialArticles: Article[] }) {
   const [articles, setArticles] = useState<Article[]>(initialArticles);

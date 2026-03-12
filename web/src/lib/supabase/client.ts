@@ -1,5 +1,9 @@
 import { createBrowserClient } from "@supabase/ssr";
 
+/**
+ * Creates a Supabase client for use in Client Components (browser).
+ * Uses the public anon key — safe for client-side usage.
+ */
 export function createClient() {
   return createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,

@@ -1,12 +1,11 @@
-import { createClient as createServerClient } from "@/utils/supabase/server";
-import { createClient } from "@supabase/supabase-js";
+import { supabaseAdmin } from "@/lib/supabase/admin";
 import { notFound } from "next/navigation";
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 export const fetchCache = 'force-no-store';
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
 import { Calendar, Clock, User, Share2, Facebook, Twitter, Linkedin, ArrowLeft } from "lucide-react";
 import Markdown from "react-markdown";
 import Link from "next/link";
@@ -14,11 +13,6 @@ import { TableOfContents } from "./TableOfContents"; // Um client component pro 
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
-  
-  const supabaseAdmin = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
 
   const { data: article } = await supabaseAdmin
     .from("articles")
@@ -39,11 +33,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
-  
-  const supabaseAdmin = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
   
   // Busca o artigo pelo SLUG
   const { data: article, error } = await supabaseAdmin

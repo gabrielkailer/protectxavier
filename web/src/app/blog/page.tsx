@@ -1,8 +1,7 @@
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
 import { BlogListClient } from "./BlogListClient";
-import { createClient as createServerClient } from "@/utils/supabase/server";
-import { createClient } from "@supabase/supabase-js";
+import { supabaseAdmin } from "@/lib/supabase/admin";
 
 export const metadata = {
   title: "Blog | Insights em Segurança - Protect Xavier",
@@ -14,11 +13,6 @@ export const revalidate = 0;
 export const fetchCache = 'force-no-store';
 
 export default async function BlogIndexPage() {
-  const supabaseAdmin = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
-
   // Busca os primeiros 9 artigos (ordenados do mais recente pro mais antigo)
   const { data: initialArticles = [], error } = await supabaseAdmin
     .from("articles")
