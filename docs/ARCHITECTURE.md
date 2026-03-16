@@ -88,7 +88,7 @@ Interfaces TypeScript compartilhadas (Article, etc.)
 7. Client-side: framer-motion hydrata animações
 
 ### Geração de Artigo (`/api/cron/generate-article`)
-1. GET request (pode ser cron ou botão do admin)
+1. GET request (disparado pelo Vercel Cron de forma automatizada via `vercel.json` ou pelo botão do admin)
 2. Seleciona tópico aleatório de `ARTICLE_TOPICS`
 3. Busca títulos existentes (evitar duplicatas)
 4. Chama OpenAI GPT-4o-mini com prompt estruturado

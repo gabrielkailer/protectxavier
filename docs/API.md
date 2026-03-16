@@ -8,6 +8,9 @@ Gera um novo artigo usando IA (OpenAI GPT-4o-mini) e salva no Supabase.
 
 **Autenticação:** Nenhuma (considerar adicionar `X-API-Key` em produção)
 
+**Acionamento Automático (Cron Jobs):**
+A rota é executada de forma automática (segundas, quartas e sextas às 10h00 UTC) pelo **Vercel Cron**, através das configurações descritas no arquivo `vercel.json` na pasta \`web/\`.
+
 **Fluxo:**
 1. Seleciona tópico aleatório da lista de temas
 2. Busca títulos existentes para evitar duplicatas

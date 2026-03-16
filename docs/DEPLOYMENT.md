@@ -63,6 +63,15 @@ O deploy é automático via Vercel:
 - Push em `main` → deploy de produção
 - Abrir PR → deploy de preview com URL única
 
+### Rotinas e Automação (Cron Jobs)
+
+Para habilitar rotinas autônomas (como a geração de artigos), usamos o recurso **Vercel Cron**.
+Ele é configurado por meio do arquivo `web/vercel.json`, que instrui a Vercel a acionar as APIs em datas e horários pré-determinados.
+
+- **Arquivo Responsável:** `web/vercel.json`
+- **Frequência Atual:** Segunda, quarta e sexta às 10h UTC (`0 10 * * 1,3,5`)
+- **Acompanhamento no Vercel:** Pode ser verificado no painel da Vercel navegando em **Settings > Cron Jobs** do projeto.
+
 ## Checklist de Deploy
 
 - [ ] `npm run build` passa localmente
